@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
+ <tileset firstgid="1" name="tileset_basic" tilewidth="16" tileheight="16" tilecount="960" columns="32">
+  <image source="../../source/repos/Merlin_Core/Merlin_Core/Resources/maps/tilesets/tileset_basic.png" width="512" height="480"/>
+ </tileset>
+ <layer id="1" name="background" width="50" height="37">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu2XwQ3CMAxFXXoGTsAktJvAJrBJ2QI2gUkKJ8qVH5VKLUoOqdzEAR+evhUpSuyfWEk9I7qDB6h7sW1McjzPiRZgmQ9j25jk+EUtlyxNuv0/QfPJ45ylpYbGkscV3BJSVx6x66t+qB8SVP2QpbY8ClAyqquO3Ot857EDe0Z11ZF7Hb0fclT7lSwN4YdvH5Pqh28fk+qH3g/14x/9CPW+mtqPUO8rvR/xz7v2q9/zg7OPcOjU/8FQ9db/YPzzrv1qmEeKdHmsEK/BAfGR/HXMHC41mL1vwBYUoMLYifx1zBwuNZi9l+ANUMKB/OgcAAA=
+  </data>
+ </layer>
+ <layer id="2" name="walls" width="50" height="37" visible="0">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAACu1YSQ6AIAw0/v9n+BN4hBdJSNMiSidxKpNMysUudrGY9m07gEyXLBdR+nNjA8EspDdrHFWyIot4WBEtHwd5HKmJoRDHEa0/2OsqWj7Y45D5kHU2SwvSXuqc30jvveHu/bXSOj+R7HUVtT9Ysb7nY7DmCdqON6y5grITpT/Y41j5+Bbe5mN0z0E9f6dvFKP7Dup5Sx97Xf29P76GqPnwniOz6Pmh3RsrvefILHp+aPdG9r09an+wImo+tHmApIct7b+VNg9QrH7M6mn9PgGxnFk26BwAAA==
+  </data>
+ </layer>
+ <objectgroup id="3" name="objects">
+  <object id="3" name="player" type="Player" x="383.482" y="223.003" width="31.2621" height="47.9352"/>
+ </objectgroup>
+ <objectgroup id="4" name="objects">
+  <object id="4" name="enemy" type="Enemy" x="383.482" y="510.614" width="31.9568" height="47.9352"/>
+ </objectgroup>
+</map>

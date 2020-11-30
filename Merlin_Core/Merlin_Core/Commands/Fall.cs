@@ -1,6 +1,6 @@
 ﻿using Merlin2d.Game.Actors;
 
-namespace Merlin_Core.Commands
+namespace MerlinCore.Commands
 {
     public class Fall<T> : IAction<T> where T : IActor
     {

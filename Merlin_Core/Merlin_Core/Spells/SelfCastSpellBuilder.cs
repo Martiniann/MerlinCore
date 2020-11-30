@@ -1,15 +1,14 @@
-﻿using MerlinCore.Actors;
-using Merlin2d.Game;
+﻿using Merlin2d.Game;
+using MerlinCore.Actors;
+using MerlinCore.Spells;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MerlinCore.Spells
+namespace Merlin_Core.Spells
 {
-    public class ProjectileSpellBuilder : ISpellBuilder
+    public class SelfCastSpellBuilder : ISpellBuilder
     {
-        private Animation animation;
-
         public ISpellBuilder AddEffect(string effectName)
         {
             throw new NotImplementedException();
@@ -17,14 +16,12 @@ namespace MerlinCore.Spells
 
         public ISpell CreateSpell(IWizard caster)
         {
-            ISpell spell = new ProjectileSpell();
-            return spell;
+            throw new NotImplementedException();
         }
 
         public ISpellBuilder SetAnimation(Animation animation)
         {
-            this.animation = animation;
-            return (ISpellBuilder)this.animation;
+            throw new NotImplementedException();
         }
 
         public ISpellBuilder SetSpellCost(int cost)

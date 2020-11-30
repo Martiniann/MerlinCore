@@ -2,7 +2,7 @@
 using Merlin2d.Game.Actors;
 using System;
 
-namespace Merlin_Core.Commands
+namespace MerlinCore.Commands
 {
     public class Jump : Command
     {

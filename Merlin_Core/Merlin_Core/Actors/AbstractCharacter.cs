@@ -1,11 +1,11 @@
-﻿using Merlin_Core.Commands;
-using Merlin_Core.Strategies;
+﻿using MerlinCore.Commands;
+using MerlinCore.Strategies;
 using Merlin2d.Game.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Actors
+namespace MerlinCore.Actors
 {
     abstract public class AbstractCharacter : AbstractActor, ICharacter, IMovable 
     { 
@@ -13,6 +13,7 @@ namespace Merlin_Core.Actors
         
         private List<Command> effects = new List<Command>();
         private double speed;
+        private int health;
         private ISpeedStrategy speedStrategy;
 
         public AbstractCharacter()
@@ -22,7 +23,7 @@ namespace Merlin_Core.Actors
 
         public void ChangeHealth(int delta)
         {
-            throw new NotImplementedException();
+            health += delta;
         }
 
         public void Die()
@@ -32,17 +33,17 @@ namespace Merlin_Core.Actors
 
         public int GetHealth()
         {
-            throw new NotImplementedException();
+            return health;
         }
 
         public void AddEffect(Command effect)
         {
-            throw new NotImplementedException();
+            effects.Add(effect);
         }
 
         public void RemoveEffect(Command effect)
         {
-            throw new NotImplementedException();
+            effects.Remove(effect);
         }
 
         public override void Update()

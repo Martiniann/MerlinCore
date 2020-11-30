@@ -1,11 +1,12 @@
-﻿using Merlin2d.Game.Actions;
+﻿using MerlinCore.Commands;
+using Merlin2d.Game.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Actors
+namespace MerlinCore.Actors
 {
-    public interface ICharacter
+    public interface ICharacter : IMovable
     {
         void ChangeHealth(int delta);
         int GetHealth();

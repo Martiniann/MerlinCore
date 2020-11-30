@@ -1,10 +1,10 @@
-﻿using Merlin_Core.Actors;
+﻿using MerlinCore.Actors;
 using Merlin2d.Game;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Spells
+namespace MerlinCore.Spells
 {
     public interface ISpellBuilder
     {

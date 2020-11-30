@@ -1,4 +1,4 @@
-﻿namespace Merlin_Core.Commands
+﻿namespace MerlinCore.Commands
 {
     interface IAction<T>
     {

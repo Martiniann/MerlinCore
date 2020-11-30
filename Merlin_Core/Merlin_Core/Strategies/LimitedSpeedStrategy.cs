@@ -1,10 +1,10 @@
-﻿using Merlin_Core.Actors;
-using Merlin_Core.Commands;
+﻿using MerlinCore.Actors;
+using MerlinCore.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Strategies
+namespace MerlinCore.Strategies
 {
     public class LimitedSpeedStrategy : ISpeedStrategy
     {

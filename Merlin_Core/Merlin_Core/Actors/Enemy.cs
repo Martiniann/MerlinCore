@@ -1,13 +1,13 @@
-﻿using Merlin_Core.Commands;
-using Merlin_Core.Strategies;
+﻿using MerlinCore.Commands;
+using MerlinCore.Strategies;
 using Merlin2d.Game;
 using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
 using System;
 
-namespace Merlin_Core.Actors
+namespace MerlinCore.Actors
 {
-    public class Enemy : AbstractActor, IMovable
+    public class Enemy : AbstractCharacter, IMovable
     {
         Random random = new Random();
 
@@ -23,62 +23,28 @@ namespace Merlin_Core.Actors
         private Command moveLeft;
 
 
-        public Enemy(IActor player)
+        public Enemy()
         {
             animationOn = new Animation("Resources/enemy.png", 64, 58);
             SetAnimation(animationOn);
             animationOn.Start();
             SetPhysics(true);
-            player1 = (Player)player;
 
-            int randomStep = random.Next(1, 2);
+            //int randomStep = random.Next(1, 2);
             int randomSpeed = random.Next(1, 3);
             if (randomSpeed == 0)
             {
                 randomSpeed = 1;
             }
 
-            moveRight = new Move(this, randomStep, randomSpeed, 0);
-            moveLeft = new Move(this, randomStep, -randomSpeed, 0);
+            moveRight = new Move(this, randomSpeed, 0);
+            moveLeft = new Move(this, -randomSpeed, 0);
         }
 
-        public void AddEffect(Command effect)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ChangeHealth(int delta)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Die()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetHealth()
-        {
-            throw new NotImplementedException();
-        }
-
-        public double GetSpeed()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveEffect(Command effect)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSpeedStrategy(ISpeedStrategy speedStrategy)
-        {
-            throw new NotImplementedException();
-        }
 
         public override void Update()
         {
+            player1 = (Player)GetWorld().GetActors().Find(a => a is Player);
             int diffenceX = player1.GetX() - GetX();
             int differenceY = player1.GetY() - GetY();
             int beforeStepX = GetX();

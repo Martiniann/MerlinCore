@@ -1,13 +1,13 @@
-﻿using Merlin_Core.Actors;
-using Merlin_Core.Commands;
-using Merlin_Core.Spells;
+﻿using MerlinCore.Actors;
+using MerlinCore.Commands;
+using MerlinCore.Spells;
 using Merlin2d.Game;
 using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
 using System;
 using System.Collections.Generic;
 
-namespace Merlin_Core.Actors
+namespace MerlinCore.Actors
 {
     public class Player : AbstractCharacter, IMovable, IWizard
     {
@@ -25,16 +25,19 @@ namespace Merlin_Core.Actors
         private List<Command> jumpLeft;
         private List<Command> jumpRight;
 
+        private int mana;
+        private ISpell spell;
+
         public Player()
         {
-            animationOn = new Animation("Resources/player.png", 64, 58);
+            animationOn = new Animation("Resources/sprites/player.png", 64, 58);
             SetAnimation(animationOn);
             animationOn.Start();
 
             SetPhysics(true);
 
-            moveLeft = new Move(this, 1, -3, 0);
-            moveRight = new Move(this, 1, 3, 0);
+            moveLeft = new Move(this, -3, 0);
+            moveRight = new Move(this, 3, 0);
 
             jump = new Jump(this, 3);
 
@@ -49,17 +52,17 @@ namespace Merlin_Core.Actors
 
         public void Cast(ISpell spell)
         {
-            throw new NotImplementedException();
+            this.spell = spell;
         }
 
         public void ChangeMana(int delta)
         {
-            throw new NotImplementedException();
+            mana -= delta;
         }
 
         public int GetMana()
         {
-            throw new NotImplementedException();
+            return mana;
         }
 
         public override void Update()

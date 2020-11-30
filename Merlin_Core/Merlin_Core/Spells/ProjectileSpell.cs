@@ -1,12 +1,12 @@
-﻿using Merlin_Core.Actors;
-using Merlin_Core.Commands;
-using Merlin_Core.Strategies;
+﻿using MerlinCore.Actors;
+using MerlinCore.Commands;
+using MerlinCore.Strategies;
 using Merlin2d.Game.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Spells
+namespace MerlinCore.Spells
 {
     class ProjectileSpell : AbstractActor, ISpell, IMovable
     {
@@ -71,9 +71,9 @@ namespace Merlin_Core.Spells
             throw new NotImplementedException();
         }
 
-        void ICharacter.AddEffect(Command effect)
-        {
-            throw new NotImplementedException();
-        }
+        //void ICharacter.AddEffect(Command effect)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Spells
+namespace MerlinCore.Spells
 {
     public class SpellDirector : ISpellDirector
     {
@@ -18,7 +18,7 @@ namespace Merlin_Core.Spells
             if (spellInfo.SpellType == SpellType.Projectile)
             {
                 builder = new ProjectileSpellBuilder();
-                builder.SetAnimation(new Animation("aaa", 1, 1)).AddEffect().CreateSpell();
+                //builder.SetAnimation(new Animation("aaa", 1, 1)).AddEffect("fireball").CreateSpell();
 
             }
             throw new NotImplementedException();

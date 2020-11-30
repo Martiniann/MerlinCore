@@ -1,10 +1,10 @@
-﻿using Merlin_Core.Spells;
+﻿using MerlinCore.Spells;
 using Merlin2d.Game.Actors;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Actors
+namespace MerlinCore.Actors
 {
     public interface IWizard : IActor
     {

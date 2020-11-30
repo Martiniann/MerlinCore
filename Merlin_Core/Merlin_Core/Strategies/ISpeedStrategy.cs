@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Merlin_Core.Strategies
+namespace MerlinCore.Strategies
 {
     public interface ISpeedStrategy
     {

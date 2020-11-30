@@ -1,10 +1,10 @@
-﻿using Merlin_Core.Actors;
+﻿using MerlinCore.Actors;
 using Merlin2d.Game;
 using Merlin2d.Game.Actors;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Merlin_Core.Commands
+namespace MerlinCore.Commands
 {
     class Gravity : AbstractActor, IPhysics
     {

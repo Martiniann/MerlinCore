@@ -1,7 +1,7 @@
 ﻿using Merlin2d.Game;
 using Merlin2d.Game.Actors;
 
-namespace Merlin_Core.Actors
+namespace MerlinCore.Actors
 {
     public abstract class AbstractActor : IActor
     {
@@ -9,6 +9,9 @@ namespace Merlin_Core.Actors
         private int x, y;
         private IWorld world;
         private bool isRemoved = false;
+        private string name;
+        private bool isSetPhysics;
+
 
         public Animation GetAnimation()
         {
@@ -42,17 +45,47 @@ namespace Merlin_Core.Actors
 
         public string GetName()
         {
-            throw new System.NotImplementedException();
+            return name;
         }
 
         public bool IntersectsWithActor(IActor other)
         {
-            throw new System.NotImplementedException();
+            int diffenceX = other.GetX() - GetX();
+            int differenceY = other.GetY() - GetY();
+            int[] otherRange = { other.GetWidth(), other.GetHeight() };
+            int[] myRange = { GetWidth(), GetHeight() };
+
+            if (diffenceX < 0)
+            {
+                diffenceX = -diffenceX;
+            }
+
+            if (differenceY < 0)
+            {
+                differenceY = -differenceY;
+            }
+
+            if (diffenceX <= (myRange[0] + otherRange[0]) && differenceY <= (myRange[1] + otherRange[1]))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
 
         public bool IsAffectedByPhysics()
         {
-            throw new System.NotImplementedException();
+            if (isSetPhysics == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public IWorld GetWorld()
@@ -77,12 +110,19 @@ namespace Merlin_Core.Actors
 
         public void SetName(string name)
         {
-            throw new System.NotImplementedException();
+            this.name = name;
         }
 
         public void SetPhysics(bool isPhysicsEnabled)
         {
-            throw new System.NotImplementedException();
+            if (isPhysicsEnabled == true)
+            {
+                isSetPhysics = true;
+            }
+            else
+            {
+                isSetPhysics = false;
+            }
         }
 
         public void SetPosition(int posX, int posY)

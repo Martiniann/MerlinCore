@@ -1,9 +1,9 @@
-﻿using Merlin_Core.Actors;
-using Merlin_Core.Strategies;
+﻿using MerlinCore.Actors;
+using MerlinCore.Strategies;
 
-namespace Merlin_Core.Commands
+namespace MerlinCore.Commands
 {
-    public interface IMovable : ICharacter
+    public interface IMovable
     {
         void SetSpeedStrategy(ISpeedStrategy speedStrategy);
         double GetSpeed();
