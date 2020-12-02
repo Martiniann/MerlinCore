@@ -51,7 +51,7 @@ namespace MerlinCore.Spells
             throw new NotImplementedException();
         }
 
-        public double GetSpeed()
+        public double GetSpeed(double speed)
         {
             throw new NotImplementedException();
         }

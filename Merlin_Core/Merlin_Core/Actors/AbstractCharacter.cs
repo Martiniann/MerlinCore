@@ -4,6 +4,7 @@ using Merlin2d.Game.Actions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Merlin_Core.Actors.State;
 
 namespace MerlinCore.Actors
 {
@@ -12,9 +13,11 @@ namespace MerlinCore.Actors
      
         
         private List<Command> effects = new List<Command>();
-        private double speed;
-        private int health;
+        //private double speed;
+        private int health = 100;
         private ISpeedStrategy speedStrategy;
+        private int maxHp = 100;
+        public DyingState myState = new DyingState();
 
         public AbstractCharacter()
         {
@@ -24,11 +27,19 @@ namespace MerlinCore.Actors
         public void ChangeHealth(int delta)
         {
             health += delta;
+            if(health > maxHp)
+            {
+                health = maxHp;
+            }
+            if(health < 0)
+            {
+                health = 0;
+            }
         }
 
         public void Die()
         {
-            throw new NotImplementedException();
+            myState.State = true;
         }
 
         public int GetHealth()
@@ -56,7 +67,7 @@ namespace MerlinCore.Actors
             this.speedStrategy = speedStrategy;
         }
 
-        public double GetSpeed()
+        public double GetSpeed(double speed)
         {
             return speedStrategy.GetSpeed(speed);
         }

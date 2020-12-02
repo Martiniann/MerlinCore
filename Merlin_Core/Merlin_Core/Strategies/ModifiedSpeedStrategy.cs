@@ -13,7 +13,6 @@ namespace MerlinCore.Strategies
 
         public ModifiedSpeedStrategy( double speedMultiplier)
         {
-
             this.speedMultiplier = speedMultiplier;
         }
 

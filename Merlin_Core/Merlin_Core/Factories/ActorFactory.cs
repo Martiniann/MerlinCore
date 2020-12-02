@@ -32,8 +32,11 @@ namespace MerlinCore.Factories
 
                 return actor;
             }
+            else
+            {
+                return null;
+            }
 
-            return null;
         }
     }
 }

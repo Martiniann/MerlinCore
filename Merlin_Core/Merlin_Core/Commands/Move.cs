@@ -1,5 +1,6 @@
 ﻿using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
+using MerlinCore.Strategies;
 using System;
 
 namespace MerlinCore.Commands
@@ -14,7 +15,8 @@ namespace MerlinCore.Commands
         public bool hitWall = false;
         private double speed;
         private double remainderSpeed = 0;
-        private IMovable movable;
+        private IMovable movable1;
+        //private ISpeedStrategy speedStrategy = new LimitedSpeedStrategy(2);
 
 
         public Move(IMovable movable, /*int step,*/ int dx, int dy)
@@ -26,6 +28,7 @@ namespace MerlinCore.Commands
                 Dy = dy;
                 Dx = dx;
                 Actor = (IActor)movable;
+                movable1 = movable;
             }
             else
             {
@@ -35,7 +38,9 @@ namespace MerlinCore.Commands
 
         public void Execute()
         {
-            speed = movable.GetSpeed();
+            //movable1.SetSpeedStrategy(speedStrategy);
+            speed = movable1.GetSpeed(speed);
+
             if (Actor.GetWorld().IntersectWithWall(Actor) is false)
             {
                 if (speed % 1 != 0)

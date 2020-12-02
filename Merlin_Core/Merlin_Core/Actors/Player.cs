@@ -6,6 +6,9 @@ using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
 using System;
 using System.Collections.Generic;
+using Merlin2d.Game.Items;
+using Merlin_Core.Actors.Items;
+using Merlin_Core.Actors.State;
 
 namespace MerlinCore.Actors
 {
@@ -20,13 +23,23 @@ namespace MerlinCore.Actors
         private Command moveRight;
         private Command moveLeft;
 
+        //ActorOrientation myOrientationLeft = ActorOrientation.facingLeft;
+        //ActorOrientation myOrientationRight = ActorOrientation.facingRight;
+
         private Command jump;
 
         private List<Command> jumpLeft;
         private List<Command> jumpRight;
 
-        private int mana;
+        private int mana = 200;
+        private int maxMana = 200;
         private ISpell spell;
+
+        IInventory backpack;
+        private HealingPotion healingPotion;
+        private ManaPotion manaPotion;
+        private IItem potion;
+
 
         public Player()
         {
@@ -48,6 +61,16 @@ namespace MerlinCore.Actors
             jumpRight = new List<Command> { };
             jumpRight.Add(jump);
             jumpRight.Add(moveRight);
+
+
+            backpack = new Backpack(6);
+            
+            backpack.AddItem(new HealingPotion());
+            backpack.AddItem(new HealingPotion());
+            backpack.AddItem(new HealingPotion());
+            backpack.AddItem(new ManaPotion());
+            backpack.AddItem(new ManaPotion());
+            backpack.AddItem(new ManaPotion());
         }
 
         public void Cast(ISpell spell)
@@ -57,7 +80,15 @@ namespace MerlinCore.Actors
 
         public void ChangeMana(int delta)
         {
-            mana -= delta;
+            mana += delta;
+            if (mana > maxMana)
+            {
+                mana = maxMana;
+            }
+            if (mana < 0)
+            {
+                mana = 0;
+            }
         }
 
         public int GetMana()
@@ -70,74 +101,121 @@ namespace MerlinCore.Actors
             base.Update();
             counter++;
             animationOn.Start();
-            
-            if (Input.GetInstance().IsKeyPressed(Input.Key.LEFT))
+            int inthp = GetHealth();
+            string strhp = inthp.ToString();
+            int intmana = GetMana();
+            string strmana = intmana.ToString();
+            GetWorld().ShowInventory(backpack);
+
+            Message msg2 = new Message(strmana, 700, 618, 25, Color.Blue, (MessageDuration)10);
+            Message msg = new Message(strhp, 750, 618, 25, Color.Red, (MessageDuration)10);
+            GetWorld().AddMessage(msg);
+            GetWorld().AddMessage(msg2);
+
+            if (GetHealth() == 0)
             {
-                if (side == false)
-                {
-                    animationOn.FlipAnimation();
-                    side = true;
-                }
-     
-            }
-            else if (Input.GetInstance().IsKeyPressed(Input.Key.RIGHT))
-            {
-                if (side == true)
-                {
-                    animationOn.FlipAnimation();
-                    side = false;
-                }
+                Die();
 
             }
-            else if (Input.GetInstance().IsKeyDown(Input.Key.SPACE) && Input.GetInstance().IsKeyDown(Input.Key.LEFT) && bunnyHop > 0)
+            if (myState.State == true)
             {
-
-                SetPhysics(false);
-                foreach (Command command in jumpLeft)
-                {
-                    command.Execute();
-                }
-                bunnyHop--;
-            }
-            else if (Input.GetInstance().IsKeyDown(Input.Key.SPACE) && Input.GetInstance().IsKeyDown(Input.Key.RIGHT) && bunnyHop > 0)
-            {
-
-                SetPhysics(false);
-                foreach (Command command in jumpRight)
-                {
-                    command.Execute();
-                }
-                bunnyHop--;
-            }
-            else if (Input.GetInstance().IsKeyDown(Input.Key.LEFT))
-            {
-                SetPhysics(true);
-                moveLeft.Execute();
-            }
-            else if (Input.GetInstance().IsKeyDown(Input.Key.RIGHT))
-            {
-                SetPhysics(true);
-                moveRight.Execute();
-            }
-            else if (Input.GetInstance().IsKeyDown(Input.Key.UP) && bunnyHop > 0)
-            {
-                SetPhysics(false);
-                jump.Execute();
-                bunnyHop--;
+                Message msg3 = new Message("GAME OVER", 250, 150, 50, Color.Yellow, (MessageDuration)1);
+                GetWorld().AddMessage(msg3);
+                animationOn.Stop();
             }
             else
             {
-                SetPhysics(true);
-                animationOn.Stop();
-            }
-
-            if (bunnyHop < 20)
-            {
-                if (counter % 120 == 0)
+                if (Input.GetInstance().IsKeyPressed(Input.Key.LEFT))
                 {
-                    bunnyHop = 20;
+                    if (side == false)
+                    {
+                        animationOn.FlipAnimation();
+                        side = true;
+
+                    }
+
+                }
+                else if (Input.GetInstance().IsKeyPressed(Input.Key.RIGHT))
+                {
+                    if (side == true)
+                    {
+                        animationOn.FlipAnimation();
+                        side = false;
+                    }
+
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.SPACE) && Input.GetInstance().IsKeyDown(Input.Key.LEFT) && bunnyHop > 0)
+                {
+
+                    SetPhysics(false);
+                    foreach (Command command in jumpLeft)
+                    {
+                        command.Execute();
+                    }
+                    bunnyHop--;
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.SPACE) && Input.GetInstance().IsKeyDown(Input.Key.RIGHT) && bunnyHop > 0)
+                {
+
+                    SetPhysics(false);
+                    foreach (Command command in jumpRight)
+                    {
+                        command.Execute();
+                    }
+                    bunnyHop--;
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.LEFT))
+                {
+                    SetPhysics(true);
+                    moveLeft.Execute();
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.RIGHT))
+                {
+                    SetPhysics(true);
+                    moveRight.Execute();
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.UP) && bunnyHop > 0)
+                {
+                    SetPhysics(false);
+                    jump.Execute();
+                    bunnyHop--;
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.E))
+                {
+                    backpack.ShiftRight();
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.Q))
+                {
+                    backpack.ShiftLeft();
+                }
+                else if (Input.GetInstance().IsKeyDown(Input.Key.F))
+                {
+                    potion = backpack.GetItem();
+                    if (potion is HealingPotion)
+                    {
+                        healingPotion = (HealingPotion)potion;
+                        healingPotion.Use(this);
+                    }
+                    else if (potion is ManaPotion)
+                    {
+                        manaPotion = (ManaPotion)potion;
+                        manaPotion.Use(this);
+                    }
+                }
+                else
+                {
+                    SetPhysics(true);
+                    animationOn.Stop();
                 }
 
+                if (bunnyHop < 20)
+                {
+                    if (counter % 120 == 0)
+                    {
+                        bunnyHop = 20;
+                    }
+
+                }
             }
         }
     }

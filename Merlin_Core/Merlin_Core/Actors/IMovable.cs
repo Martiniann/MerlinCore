@@ -6,6 +6,6 @@ namespace MerlinCore.Commands
     public interface IMovable
     {
         void SetSpeedStrategy(ISpeedStrategy speedStrategy);
-        double GetSpeed();
+        double GetSpeed(double speed);
     }
 }

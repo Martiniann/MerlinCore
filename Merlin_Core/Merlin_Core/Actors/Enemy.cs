@@ -25,13 +25,13 @@ namespace MerlinCore.Actors
 
         public Enemy()
         {
-            animationOn = new Animation("Resources/enemy.png", 64, 58);
+            animationOn = new Animation("Resources/sprites/enemy.png", 64, 58);
             SetAnimation(animationOn);
             animationOn.Start();
             SetPhysics(true);
 
             //int randomStep = random.Next(1, 2);
-            int randomSpeed = random.Next(1, 3);
+            int randomSpeed = random.Next(1, 2);
             if (randomSpeed == 0)
             {
                 randomSpeed = 1;
@@ -49,6 +49,10 @@ namespace MerlinCore.Actors
             int differenceY = player1.GetY() - GetY();
             int beforeStepX = GetX();
 
+            int inthp = GetHealth();
+            string strhp = inthp.ToString();
+            Message msg = new Message(strhp , GetX()+25, GetY()-5, 11, Color.Red, (MessageDuration)2);
+            GetWorld().AddMessage(msg);
 
             if (diffenceX < 0)
             {
