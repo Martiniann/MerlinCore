@@ -1,4 +1,6 @@
-﻿using Merlin2d.Game.Items;
+﻿using Merlin2d.Game;
+using Merlin2d.Game.Enums;
+using Merlin2d.Game.Items;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,8 +14,7 @@ namespace Merlin_Core.Actors.Items
         private IItem[] items;
         
         private int capacity;
-        private int position = 0;
-
+        public int position = 0;
 
         public Backpack(int capacity)
         {
@@ -37,6 +38,11 @@ namespace Merlin_Core.Actors.Items
         public int GetCapacity()
         {
             return capacity;
+        }
+
+        public int GetPosition
+        {
+            get{ return position; }
         }
 
         public IEnumerator<IItem> GetEnumerator()
@@ -77,7 +83,6 @@ namespace Merlin_Core.Actors.Items
 
         public void RemoveItem(int index)
         {
-
             items[index] = null;
         }
 

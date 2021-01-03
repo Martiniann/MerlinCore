@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="5">
- <tileset firstgid="1" source="tileset_basic.tsx"/>
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="50" height="37" tilewidth="16" tileheight="16" infinite="0" nextlayerid="10" nextobjectid="10">
+ <tileset firstgid="1" name="tileset_basic" tilewidth="16" tileheight="16" tilecount="960" columns="32">
+  <image source="tilesets/tileset_basic.png" width="512" height="480"/>
+ </tileset>
  <layer id="1" name="background" width="50" height="37">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu2YTW4CMQyFDaiUDZRduUSBHZxsepPpSUq5BD87uAQ/O7rsW8yToohQzBARozzpU+yMJnLkOGNYNEWWYAXWFa5vxd6BPTiAY4XrW7G7LZEeeAP9Cte3Yn+AIRiBcYXrW7E3IrIVu2L8J/D74FjqiPG/N0QGjUdHc7sY/wRMDe+D8ef6SEO5PtKStj6+wQz8gPkVfux1KG19vKCHaYNX0Gn+78deh8r1kZae5fvBfVj/fjAPPF91741zirGG7zMP3E/de+OcYqzh+8yD9XPF+rB+7/I8Wb93/frQKlZfolXd+ojVl2jl37tWxTxYrw/mIfclaUjbl9yjx7hG2jj8+rj375tbpY0j10daYh6s5+NZ/4crYH86FN7ozhcB+9JcaNS+H3rGOilhfzmU3ujOlwH70lxo1L4fevYH1znSPOgcAAA=
+   H4sIAAAAAAAACu2XOQ7CMBREf4hYGpYOLsHSILgIy0ngJnASlksE6OASLB2UTGFLUbAULyGxI4/05O9YssbFfDtRhegEziBysL4w7uABno7WL0YzJGqBduhm3WH0wQAMHa1HjCsR3chdcf9v8CnYi4m4/25A1AuKdqMv7n8Cpg6fg/v3+bBDPh92yefDLvl82KWy5mMH9uAAjoK5jGZgDhZgKdgjuS6jNF/JfFTxL1IDddCo/M5llLbHP/b0+bBL/v6wS6b50O1vWfTFuEzzoduLsuhhcfl82CV/f9gl1feVaV+RlaoP1feVaV+RlaqPeD7GJcmHy+fg+SjLOcp2D65QrymfUXdNNCbvwQ2+bSmfUXdNNHL/XzWXo2DoHAAA
   </data>
  </layer>
+ <objectgroup id="8" name="objects">
+  <object id="7" name="switch" type="Switch" x="33.955" y="414.662" width="33.955" height="45.2733"/>
+ </objectgroup>
  <layer id="2" name="walls" width="50" height="37" visible="0">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAACu1YWwrAIAwb+Oluovc/334mdCLa1sdsMBBkH3YGbVzm3XV5o7zJGIyypCOSZ2vMdaTRGnMdVoGmI76jVVAdCPuBcq5QdJz+2APScyW972fX0eqQ3vez62h17Ao0Hcev+O/g9mzPO7j5Q4O8p7Xr5ObB6No+8hdqmfDkj/1wdHznU9L+k8zr8ZNeHSVfCIx6o/0E7Vyh3Oco+4GmY3S+6V2XlDHTMyrfaKH5Pzv7e3cFUPvDKtB00F5ZxVou0tTS+NQItvxTwrT+B4duWnDoHAAA
+   H4sIAAAAAAAACu2YSw7CMAxEI1jxuQifi7Y3oTcpcBEoh2C6iAhRFcWNLTmRR3qKvGjsUdtR2nHj3B08wFOYsM/IXL/AG0zgI0zYJ+5bWu+2zu3BARyFCfvEfUvrEziDC7gKE/aJ+5bWHe5JD2qVn9986JD50CXzoUt+/r4hH0MDPlp5rsyHDrXqo0uQ6zO1h8Se8fzzekuQm2epPST2HBZ81CrzoUvm43f9miziyDBOH2uziCPDOH1oUWs+7PtDhyjnK45cocxFmYNyvuLIlVxR59D6ns//zyfCPOZDVubjf62NMKeGYK0NP/cX9hT0iegcAAA=
   </data>
  </layer>
  <objectgroup id="3" name="objects">
-  <object id="1" name="player" x="383.75" y="239.318" width="32" height="47.0909"/>
+  <object id="1" name="player" type="Player" x="400" y="217.568" width="32" height="48"/>
  </objectgroup>
  <objectgroup id="4" name="objects">
-  <object id="2" name="enemy" x="384" y="511.818" width="32" height="47.0909"/>
+  <object id="2" name="enemy" type="Enemy" x="367.75" y="505.318" width="32" height="48"/>
+ </objectgroup>
+ <objectgroup id="9" name="objects">
+  <object id="8" name="pressurePlate" type="PressurePlate" x="715.113" y="543.28" width="50" height="15"/>
+ </objectgroup>
+ <objectgroup id="7" name="objects">
+  <object id="5" name="door" type="Door" x="576.206" y="496.977" width="29.8392" height="61.7363"/>
  </objectgroup>
 </map>

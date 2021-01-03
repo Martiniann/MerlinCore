@@ -9,7 +9,7 @@ namespace MerlinCore.Strategies
 {
     public class NormalSpeedStrategy : ISpeedStrategy
     {
-         
+
         public NormalSpeedStrategy()
         {
 
@@ -17,6 +17,10 @@ namespace MerlinCore.Strategies
 
         public double GetSpeed(double speed)
         {
+            if (speed > 1.5)
+            {
+                speed = 1.5;
+            }
             return speed;
         }
     }

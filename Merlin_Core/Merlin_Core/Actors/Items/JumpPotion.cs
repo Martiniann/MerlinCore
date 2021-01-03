@@ -8,14 +8,15 @@ using System.Text;
 
 namespace Merlin_Core.Actors.Items
 {
-    public class ManaPotion : AbstractActor, IItem, IUsable
+    public class JumpPotion : AbstractActor, IItem, IUsable
     {
+        private int duration = 600;
         private int usesRemaining = 1;
         private Player player1;
 
-        public ManaPotion()
+        public JumpPotion()
         {
-            SetAnimation(new Animation("Resources/sprites/mana_potion.png", 128, 128));
+            SetAnimation(new Animation("Resources/sprites/jump_potion.png", 128, 128));
         }
 
         public int UsesRemaining()
@@ -23,9 +24,9 @@ namespace Merlin_Core.Actors.Items
             return usesRemaining;
         }
 
-        public override void Update()
+        public int GetDuration()
         {
-            throw new NotImplementedException();
+            return duration;
         }
 
         public void Use(IActor actor)
@@ -33,10 +34,15 @@ namespace Merlin_Core.Actors.Items
             player1 = (Player)actor;
             if (usesRemaining-- > 0)
             {
-                player1.ChangeMana(20);
+                player1.SetJump(5);
                 SetAnimation(new Animation("Resources/sprites/used_potion.png", 128, 128));
                 //this.RemoveFromWorld();
             }
+        } 
+        
+        public override void Update()
+        {
+            throw new NotImplementedException();
         }
     }
 }

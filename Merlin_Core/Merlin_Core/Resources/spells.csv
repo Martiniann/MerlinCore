@@ -1,3 +1,5 @@
 ﻿name;spelltype;animationpath;animationwidth;animationheight;effect1,effect2,effect3
-fireball;cast;Resources/sprites/fireball.png;32;16;damage-40,dot-1
-snowball;cast;Resources/sprites/snowball.png;32;16;damage-20,slow-5
+fireball;projectile;Resources/sprites/fireball.png;32;16;damage-40;dot-1
+snowball;projectile;Resources/sprites/snowball.png;32;16;damage-20;slow-10
+arcaneball;projectile;Resources/sprites/arcaneball.png;32;16;damage-20;freeze+5
+healingtouch;selfcast; ; ; ;heal+20

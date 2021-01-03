@@ -65,7 +65,7 @@ namespace MerlinCore.Actors
                 differenceY = -differenceY;
             }
 
-            if (diffenceX <= (myRange[0] + otherRange[0]) && differenceY <= (myRange[1] + otherRange[1]))
+            if (diffenceX < (myRange[0] - (otherRange[0] / 2)) && differenceY < otherRange[1])
             {
                 return true;
             }

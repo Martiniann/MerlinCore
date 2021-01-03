@@ -10,15 +10,21 @@ namespace MerlinCore.Strategies
     {
 
         private double speedMultiplier;
+        private double modifiedSpeed;
 
-        public ModifiedSpeedStrategy( double speedMultiplier)
+        public ModifiedSpeedStrategy(double speedMultiplier)
         {
             this.speedMultiplier = speedMultiplier;
         }
 
         public double GetSpeed(double speed)
         {
-            return speed * speedMultiplier;
+            modifiedSpeed = speed * speedMultiplier;
+            if (modifiedSpeed > 6)
+            {
+                modifiedSpeed = 6;
+            }
+            return modifiedSpeed;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace MerlinCore.Commands
         private double speed;
         private double remainderSpeed = 0;
         private IMovable movable1;
-        //private ISpeedStrategy speedStrategy = new LimitedSpeedStrategy(2);
+        private ISpeedStrategy speedStrategy = new NormalSpeedStrategy();
 
 
         public Move(IMovable movable, /*int step,*/ int dx, int dy)
@@ -29,6 +29,7 @@ namespace MerlinCore.Commands
                 Dx = dx;
                 Actor = (IActor)movable;
                 movable1 = movable;
+                movable1.SetSpeedStrategy(speedStrategy);
             }
             else
             {
@@ -38,7 +39,6 @@ namespace MerlinCore.Commands
 
         public void Execute()
         {
-            //movable1.SetSpeedStrategy(speedStrategy);
             speed = movable1.GetSpeed(speed);
 
             if (Actor.GetWorld().IntersectWithWall(Actor) is false)

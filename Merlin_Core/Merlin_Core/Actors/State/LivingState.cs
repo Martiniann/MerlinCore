@@ -13,11 +13,6 @@ namespace Merlin_Core.Actors.State
             {
                 return state;
             }
-            set
-            {
-                state = value;
-            }
-
         }
     }
 }

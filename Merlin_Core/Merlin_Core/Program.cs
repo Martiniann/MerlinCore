@@ -6,6 +6,8 @@ using MerlinCore.Actors;
 using MerlinCore.Commands;
 using Merlin2d.Game.Items;
 using Merlin_Core.Actors.Items;
+using Merlin2d.Game.Enums;
+using Merlin_Core.Actors;
 
 namespace MerlinCore
 {
@@ -13,37 +15,36 @@ namespace MerlinCore
     {
         static void Main(string[] args)
         {
-            GameContainer container = new GameContainer("MerlinCore_Game", 800, 650);
-            container.SetMap("Resources/maps/map08.tmx");
-            IWorld world = container.GetWorld();
+            GameContainer container = new GameContainer("MerlinCore_Game", 800, 650, true);
 
-            world.SetFactory(new ActorFactory());
+            container.AddWorld("Resources/maps/map03.tmx");
+            container.AddWorld("Resources/maps/map02.tmx");
+
+            Message msgWon = new Message("YOU HAVE WON", 200, 150, 50, Color.Yellow, (MessageDuration)1);
+            Message msgLost = new Message("GAME OVER", 250, 150, 50, Color.Yellow, (MessageDuration)1);
+
+            container.SetEndGameMessage(msgWon, true);
+            container.SetEndGameMessage(msgLost, false);
+
+            IWorld world = container.GetWorld(0);
+            IWorld world1 = container.GetWorld(1);
+            
             ActorFactory factory = new ActorFactory();
-            world.AddActor(factory.Create("Player", "player", 384, 223));
-
+            world.SetFactory(factory);
+            world1.SetFactory(factory);
+     
             world.SetPhysics(new Gravity());
+            world1.SetPhysics(new Gravity());
 
-            //IInventory backpack = new Backpack(6);
-            //backpack.AddItem(new HealingPotion());
-            //backpack.AddItem(new HealingPotion());
-            //backpack.AddItem(new HealingPotion());
-            //backpack.AddItem(new ManaPotion());
-            //backpack.AddItem(new ManaPotion());
-            //backpack.AddItem(new ManaPotion());
+            Action<IWorld> setSubs = world => 
+            { 
+                Switch switch1 = (Switch)world.GetActors().Find(a => a is Switch);
+                Door door1 = (Door)world.GetActors().Find(a => a is Door);
+                switch1.Subscribe(door1);
+                door1.SetDoor(36, 37, 31, 34);
+            };
 
-
-            //backpack.ShiftLeft();
-            //backpack.ShiftRight();
-            //backpack.ShiftRight();
-            //backpack.RemoveItem(5);
-            //backpack.RemoveItem(new ManaPotion());
-            //backpack.GetItem();
-            //world.ShowInventory(backpack);
-            
-            Message msg = new Message("INVENTORY", 250, 618, 20, Color.Yellow, (MessageDuration)1); //optional arguments: fontSize, color, duration
-            
-            world.AddMessage(msg);
-            //world.RemoveMessage(msg);
+            world.AddInitAction(setSubs);
 
             //Action<IWorld> setCamera = world => { world.CenterOn(world.GetActors().Find(a => a.GetName() == "player")); };
             //world.AddInitAction(setCamera);

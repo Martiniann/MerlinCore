@@ -8,14 +8,21 @@ namespace Merlin_Core.Spells
 {
     public class SelfCastSpell : ISpell
     {
+        private int cost;
+        private List<Command> effects = new List<Command>();
+
         public ISpell AddEffect(Command effect)
         {
-            throw new NotImplementedException();
+            effects.Add(effect);
+            return (ISpell)effects;
         }
 
         public void AddEffects(IEnumerable<Command> effects)
         {
-            throw new NotImplementedException();
+            foreach (Command effect in effects)
+            {
+                this.effects.Add(effect);
+            }
         }
 
         public void Cast()
@@ -25,7 +32,7 @@ namespace Merlin_Core.Spells
 
         public int GetCost()
         {
-            throw new NotImplementedException();
+            return cost;
         }
     }
 }

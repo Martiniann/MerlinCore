@@ -9,10 +9,13 @@ namespace MerlinCore.Spells
     public class ProjectileSpellBuilder : ISpellBuilder
     {
         private Animation animation;
+        private int cost;
+        private List<string> effects = new List<string>();
 
         public ISpellBuilder AddEffect(string effectName)
         {
-            throw new NotImplementedException();
+            effects.Add(effectName);
+            return (ISpellBuilder)effects;
         }
 
         public ISpell CreateSpell(IWizard caster)
@@ -29,6 +32,8 @@ namespace MerlinCore.Spells
 
         public ISpellBuilder SetSpellCost(int cost)
         {
+            //this.cost = cost;
+            //return (ISpellBuilder)this.cost;
             throw new NotImplementedException();
         }
     }

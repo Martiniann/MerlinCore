@@ -4,6 +4,7 @@ using Merlin2d.Game;
 using Merlin2d.Game.Actions;
 using Merlin2d.Game.Actors;
 using System;
+using Merlin2d.Game.Enums;
 
 namespace MerlinCore.Actors
 {
@@ -39,20 +40,15 @@ namespace MerlinCore.Actors
 
             moveRight = new Move(this, randomSpeed, 0);
             moveLeft = new Move(this, -randomSpeed, 0);
+
         }
 
-
-        public override void Update()
+        public void HuntingPlayer()
         {
             player1 = (Player)GetWorld().GetActors().Find(a => a is Player);
             int diffenceX = player1.GetX() - GetX();
             int differenceY = player1.GetY() - GetY();
             int beforeStepX = GetX();
-
-            int inthp = GetHealth();
-            string strhp = inthp.ToString();
-            Message msg = new Message(strhp , GetX()+25, GetY()-5, 11, Color.Red, (MessageDuration)2);
-            GetWorld().AddMessage(msg);
 
             if (diffenceX < 0)
             {
@@ -87,7 +83,7 @@ namespace MerlinCore.Actors
                 }
                 else
                 {
-                    Console.WriteLine("GAME OVER!");
+                    player1.ChangeHealth(-1);
                     animationOn.Stop();
                 }
             }
@@ -116,6 +112,36 @@ namespace MerlinCore.Actors
                     }
                 }
             }
+        }
+
+        public override void Update()
+        {
+            int inthp = GetHealth();
+            string strhp = inthp.ToString();
+            Message msg = new Message(strhp , GetX()+25, GetY()-5, 11, Color.Red, (MessageDuration)2);
+            GetWorld().AddMessage(msg);
+
+            if (GetHealth() == 0)
+            {
+                Die();
+            }
+            if (Input.GetInstance().IsKeyPressed(Input.Key.B))
+            {
+                this.ChangeHealth(-90);
+            }
+            if (myState == false)
+            {
+                animationOn.Stop();
+                RemoveFromWorld();              
+            }
+            else
+            {                
+                if (IntersectsWithActor(GetWorld().GetActors().Find(a => a.GetName() == "player")))
+                {
+                    ChangeHealth(-1);
+                }
+                HuntingPlayer();
+            }  
         }
     }
 }

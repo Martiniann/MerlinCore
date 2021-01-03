@@ -8,7 +8,7 @@ using Merlin_Core.Actors.State;
 
 namespace MerlinCore.Actors
 {
-    abstract public class AbstractCharacter : AbstractActor, ICharacter, IMovable 
+    public abstract class AbstractCharacter : AbstractActor, ICharacter, IMovable 
     { 
      
         
@@ -17,7 +17,7 @@ namespace MerlinCore.Actors
         private int health = 100;
         private ISpeedStrategy speedStrategy;
         private int maxHp = 100;
-        public DyingState myState = new DyingState();
+        public bool myState = new LivingState().State;
 
         public AbstractCharacter()
         {
@@ -39,7 +39,7 @@ namespace MerlinCore.Actors
 
         public void Die()
         {
-            myState.State = true;
+            myState = new DyingState().State;
         }
 
         public int GetHealth()

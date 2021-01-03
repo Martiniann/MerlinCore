@@ -1,17 +1,17 @@
-﻿using MerlinCore.Actors;
-using MerlinCore.Commands;
+﻿using MerlinCore.Commands;
 using MerlinCore.Spells;
 using Merlin2d.Game;
 using Merlin2d.Game.Actions;
-using Merlin2d.Game.Actors;
-using System;
 using System.Collections.Generic;
 using Merlin2d.Game.Items;
 using Merlin_Core.Actors.Items;
-using Merlin_Core.Actors.State;
+using Merlin_Core.Spells;
+using MerlinCore.Strategies;
+using Merlin2d.Game.Enums;
 
 namespace MerlinCore.Actors
 {
+
     public class Player : AbstractCharacter, IMovable, IWizard
     {
 
@@ -19,6 +19,9 @@ namespace MerlinCore.Actors
         private bool side = false;
         private int counter = 0;
         private int bunnyHop = 20;
+        private int jumpCounter = 0;
+        private int speedCounter = 0;
+        private ISpeedStrategy speedStrategy = new NormalSpeedStrategy();
 
         private Command moveRight;
         private Command moveLeft;
@@ -38,8 +41,11 @@ namespace MerlinCore.Actors
         IInventory backpack;
         private HealingPotion healingPotion;
         private ManaPotion manaPotion;
+        private SpeedPotion speedPotion;
+        private JumpPotion jumpPotion;
         private IItem potion;
-
+        private int position = 1;
+        private IWorld world;
 
         public Player()
         {
@@ -62,20 +68,32 @@ namespace MerlinCore.Actors
             jumpRight.Add(jump);
             jumpRight.Add(moveRight);
 
-
             backpack = new Backpack(6);
             
             backpack.AddItem(new HealingPotion());
             backpack.AddItem(new HealingPotion());
-            backpack.AddItem(new HealingPotion());
             backpack.AddItem(new ManaPotion());
             backpack.AddItem(new ManaPotion());
-            backpack.AddItem(new ManaPotion());
+            backpack.AddItem(new SpeedPotion());
+            backpack.AddItem(new JumpPotion());
+        }
+
+        public void SetJump(int dy)
+        {
+            jump = new Jump(this, dy);
+
+            jumpLeft = new List<Command> { };
+            jumpLeft.Add(jump);
+            jumpLeft.Add(moveLeft);
+
+            jumpRight = new List<Command> { };
+            jumpRight.Add(jump);
+            jumpRight.Add(moveRight);
         }
 
         public void Cast(ISpell spell)
         {
-            this.spell = spell;
+            ISpellDirector director = new SpellDirector(SpellDataProvider.GetInstance());
         }
 
         public void ChangeMana(int delta)
@@ -96,35 +114,48 @@ namespace MerlinCore.Actors
             return mana;
         }
 
-        public override void Update()
+        public void ShowPlayerInformation()
         {
-            base.Update();
-            counter++;
-            animationOn.Start();
             int inthp = GetHealth();
             string strhp = inthp.ToString();
             int intmana = GetMana();
             string strmana = intmana.ToString();
-            GetWorld().ShowInventory(backpack);
-
-            Message msg2 = new Message(strmana, 700, 618, 25, Color.Blue, (MessageDuration)10);
-            Message msg = new Message(strhp, 750, 618, 25, Color.Red, (MessageDuration)10);
+            
+            Message msg2 = new Message(strmana, 700, 618, 25, Color.Blue, (MessageDuration)2);
+            Message msg = new Message(strhp, 750, 618, 25, Color.Red, (MessageDuration)2);
             GetWorld().AddMessage(msg);
             GetWorld().AddMessage(msg2);
+            GetWorld().ShowInventory(backpack);
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            ShowPlayerInformation();
+            counter++;
+            animationOn.Start();        
+
+            if(GetWorld().GetActors().Find(a => a.GetName() == "enemy") == null)
+            {
+                world = GetWorld();
+                world.SetEndCondition(world => MapStatus.Finished);
+            }
 
             if (GetHealth() == 0)
             {
                 Die();
-
             }
-            if (myState.State == true)
+
+            if (myState == false)
             {
-                Message msg3 = new Message("GAME OVER", 250, 150, 50, Color.Yellow, (MessageDuration)1);
-                GetWorld().AddMessage(msg3);
                 animationOn.Stop();
+                world = GetWorld();
+                world.SetEndCondition(world => MapStatus.Failed);               
             }
             else
             {
+
                 if (Input.GetInstance().IsKeyPressed(Input.Key.LEFT))
                 {
                     if (side == false)
@@ -180,11 +211,11 @@ namespace MerlinCore.Actors
                     jump.Execute();
                     bunnyHop--;
                 }
-                else if (Input.GetInstance().IsKeyDown(Input.Key.E))
+                else if (Input.GetInstance().IsKeyPressed(Input.Key.E))
                 {
                     backpack.ShiftRight();
                 }
-                else if (Input.GetInstance().IsKeyDown(Input.Key.Q))
+                else if (Input.GetInstance().IsKeyPressed(Input.Key.Q))
                 {
                     backpack.ShiftLeft();
                 }
@@ -201,6 +232,23 @@ namespace MerlinCore.Actors
                         manaPotion = (ManaPotion)potion;
                         manaPotion.Use(this);
                     }
+                    else if (potion is SpeedPotion)
+                    {
+                        speedPotion = (SpeedPotion)potion;
+                        speedPotion.Use(this);
+                        speedCounter = 1;
+                    }
+                    else if (potion is JumpPotion)
+                    {
+                        jumpPotion = (JumpPotion)potion;
+                        jumpPotion.Use(this);
+                        jumpCounter = 1;
+                    }
+                }
+                else if (Input.GetInstance().IsKeyPressed(Input.Key.R))
+                {
+                    backpack.RemoveItem(backpack.GetCapacity() - position);
+                    position++;
                 }
                 else
                 {
@@ -214,7 +262,27 @@ namespace MerlinCore.Actors
                     {
                         bunnyHop = 20;
                     }
+                }
+                
+                if (jumpCounter > 0)
+                {
+                    jumpCounter++;
+                    if (jumpCounter == jumpPotion.GetDuration())
+                    {
+                        SetJump(3);
+                        jumpCounter = 0;
+                    }
+                }
+               
 
+                if (speedCounter > 0)
+                {
+                    speedCounter++;
+                    if (speedCounter == speedPotion.GetDuration())
+                    {
+                        this.SetSpeedStrategy(speedStrategy);
+                        speedCounter = 0;
+                    }
                 }
             }
         }

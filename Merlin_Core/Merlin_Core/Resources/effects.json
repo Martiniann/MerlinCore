@@ -1,4 +1,4 @@
-{
+[
   {
     "name": "damage",
     "cost": 20
@@ -11,6 +11,16 @@
 
   {
     "name": "slow",
-    "cost":  10
+    "cost": 10
+  },
+
+  {
+    "name": "freeze",
+    "cost": 15
+  },
+
+  {
+    "name": "heal",
+    "cost": 15
   }
-}
+]
